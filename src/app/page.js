@@ -8,9 +8,11 @@ import { run } from "./gemini";
 export default function Home() {
   const [imageURL, setImageURL] = useState("");
   const [submitLoad, setSubmitLoad] = useState(false);
+  const [data, setData] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
-  const [promt, setPromt] = useState("");
-  const template = "https://fastly.picsum.photos/";
+  const [prompt, setPrompt] = useState("");
+  const [persona, setPersona] = useState("");
+  const [text, setText] = useState("");
 
   const handleReset = async () => {
     try {
@@ -18,6 +20,7 @@ export default function Home() {
       const response = await axios.get(
         "https://picsum.photos/400/400?grayscale"
       );
+      setData(response.data);
       setImageURL(response.request.responseURL);
     } catch (error) {
       console.error(error);
@@ -27,28 +30,35 @@ export default function Home() {
   };
 
   const handlePromt = (e) => {
-    setPromt(e.target.value);
-    console.log(promt);
-  }
+    setPrompt(e.target.value);
+    console.log(prompt);
+  };
 
   const handleSubmit = async () => {
-    if(!promt){
+    // console.log(prompt);
+    if (!prompt) {
       console.error("There must be some content");
       return;
     }
+
+    const text = prompt + " Write only in points at least 5 and at most 15 the personality attributes of the person who is writing the message after perceiving the image.like this:- The person who is writing the message is:1. Growth Minded.2. Action taker.3. Humor.4. Gentle.5. Courageous";
+    // console.log(text);
     try {
       setSubmitLoad(true);
-      const textResult = await run(imageURL, promt);
-      console.log(textResult);
+      // console.log(prompt);
+      const details = {
+        prompt: text,
+        imageData: data,
+      };
+      const textResult = await run(details);
+      setPersona(textResult);
     } catch (error) {
       console.error(error);
-    }
-    finally{
+    } finally {
       setSubmitLoad(false);
     }
-  }
+  };
 
-  
   useEffect(() => {
     const fetchImage = async () => {
       try {
@@ -56,6 +66,7 @@ export default function Home() {
         const response = await axios.get(
           "https://picsum.photos/400/400?grayscale"
         );
+        setData(response.data);
         setImageURL(response.request.responseURL);
       } catch (error) {
         console.error(error);
@@ -66,6 +77,22 @@ export default function Home() {
     fetchImage();
   }, []);
 
+  useEffect(()=>{
+    let index = 0;
+
+    // Use setInterval to update the textarea value gradually
+    const intervalId = setInterval(() => {
+      if (index <= persona.length) {
+        setText(persona.slice(0, index));
+        index += 1;
+      } else {
+        clearInterval(intervalId);
+      }
+    }, 30); // Adjust the interval based on your preference
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [persona])
 
   return (
     <>
@@ -77,7 +104,7 @@ export default function Home() {
           <p className="text-xl font-bold w-full text-center p-2">Image</p>
           <div className="flex h-[400px] items-center justify-center">
             {imageLoading ? (
-              <div class="loader text-sky-500"></div>
+              <div className="loader text-sky-500"></div>
             ) : (
               <img src={imageURL} alt="image" className="" />
             )}
@@ -90,7 +117,7 @@ export default function Home() {
           </p>
           <textarea
             placeholder="Write here...."
-            className="h-full w-full text-start border-2 p-1 box-border"
+            className="h-full w-full text-start border-4 p-2 box-border"
             onChange={handlePromt}
           ></textarea>
         </div>
@@ -98,8 +125,9 @@ export default function Home() {
           <p className="text-xl font-bold w-full text-center p-2">Result</p>
           <textarea
             type="text"
-            className="h-[400px] w-[400px] border-2"
+            className="h-[400px] w-[400px] border-4 p-2"
             readOnly
+            value={text}
           ></textarea>
         </div>
       </div>
@@ -110,7 +138,10 @@ export default function Home() {
         >
           Reset
         </button>
-        <button className="py-2 px-4 bg-sky-500 cursor-pointer hover:bg-sky-600 rounded-lg transition ease-in-out hover:text-white" onClick={() => handleSubmit(imageURL, promt)}>
+        <button
+          className="py-2 px-4 bg-sky-500 cursor-pointer hover:bg-sky-600 rounded-lg transition ease-in-out hover:text-white"
+          onClick={() => handleSubmit(data, prompt)}
+        >
           Submit
         </button>
       </div>
