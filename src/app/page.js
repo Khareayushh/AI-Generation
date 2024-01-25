@@ -20,6 +20,8 @@ export default function Home() {
       const response = await axios.get(
         "https://picsum.photos/400/400?grayscale"
       );
+
+      setText("");
       setData(response.data);
       setImageURL(response.request.responseURL);
     } catch (error) {
@@ -41,7 +43,9 @@ export default function Home() {
       return;
     }
 
-    const text = prompt + " Write only in points at least 5 and at most 15 the personality attributes of the person who is writing the message after perceiving the image.like this:- The person who is writing the message is:1. Growth Minded.2. Action taker.3. Humor.4. Gentle.5. Courageous";
+    const text =
+      prompt +
+      " Write only in points at least 5 and at most 15 the personality attributes of the person who is writing the message after perceiving the image.like this:- The person who is writing the message is:1. Growth Minded.2. Action taker.3. Humor.4. Gentle.5. Courageous";
     // console.log(text);
     try {
       setSubmitLoad(true);
@@ -77,7 +81,7 @@ export default function Home() {
     fetchImage();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     let index = 0;
 
     // Use setInterval to update the textarea value gradually
@@ -92,59 +96,67 @@ export default function Home() {
 
     // Clean up the interval on component unmount
     return () => clearInterval(intervalId);
-  }, [persona])
+  }, [persona]);
 
   return (
-    <>
-      <div className="head flex items-center justify-center mt-4">
-        <p className="font-bold text-3xl bg-transparent ">Persona</p>
-      </div>
-      <div className="main flex justify-evenly mt-16">
-        <div className="left img-container w-[400px]">
-          <p className="text-xl font-bold w-full text-center p-2">Image</p>
-          <div className="flex h-[400px] items-center justify-center">
-            {imageLoading ? (
-              <div className="loader text-sky-500"></div>
-            ) : (
-              <img src={imageURL} alt="image" className="" />
-            )}
+    <div className="flex justify-center">
+      <div className="flex flex-col">
+        <div className="main grid grid-cols-3 gap-8 mt-16 max-w-screen-2xl max-xl:grid-cols-2 max-md:grid-cols-1">
+          <div className="left img-container w-[400px] ">
+            <p className="text-xl font-bold w-full text-center p-2">Image</p>
+            <div className="flex h-[400px] items-center justify-center">
+              {imageLoading ? (
+                <div className="loader"></div>
+              ) : (
+                <img src={imageURL} alt="image" className="" />
+              )}
+            </div>
+          </div>
+          <div className="right user-text-container w-[400px] h-[400px] text-start">
+            {/* text input is here for input from user */}
+            <p className="text-xl font-bold w-full text-center p-2">
+              Write what you percieved image
+            </p>
+            <textarea
+              placeholder="Write here...."
+              className="h-full w-full text-start border-4 p-2 box-border"
+              onChange={handlePromt}
+            ></textarea>
+          </div>
+
+          <div id="result-section" className="result max-md:mt-4">
+            <p className="text-xl font-bold w-full text-center p-2">Result</p>
+            <div className="flex justify-center items-center h-[400px]">
+              {submitLoad ? (
+                <div className="loader"></div>
+              ) : (
+                <div>
+                  <textarea
+                    type="text"
+                    className="h-[400px] w-[400px] border-4 p-2"
+                    readOnly
+                    value={text}
+                  ></textarea>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        <div className="right user-text-container w-[400px] h-[400px] text-start">
-          {/* text input is here for input from user */}
-          <p className="text-xl font-bold w-full text-center p-2">
-            Write what you percieved image
-          </p>
-          <textarea
-            placeholder="Write here...."
-            className="h-full w-full text-start border-4 p-2 box-border"
-            onChange={handlePromt}
-          ></textarea>
-        </div>
-        <div id="result-section" className="result">
-          <p className="text-xl font-bold w-full text-center p-2">Result</p>
-          <textarea
-            type="text"
-            className="h-[400px] w-[400px] border-4 p-2"
-            readOnly
-            value={text}
-          ></textarea>
+        <div className="btns my-4 flex items-center justify-center">
+          <button
+            className="py-2 px-4 font-bold bg-red-500 text-white cursor-pointer mr-4 hover:bg-red-700 rounded-lg transition ease-in-out hover:text-white"
+            onClick={handleReset}
+          >
+            Reset
+          </button>
+          <button
+            className="py-2 px-4 font-bold text-white bg-red-500 cursor-pointer hover:bg-red-700 rounded-lg transition ease-in-out hover:text-white"
+            onClick={() => handleSubmit(data, prompt)}
+          >
+            Submit
+          </button>
         </div>
       </div>
-      <div className="btns my-4 flex items-center justify-center">
-        <button
-          className="py-2 px-4 bg-sky-500 cursor-pointer mr-4 hover:bg-sky-600 rounded-lg transition ease-in-out hover:text-white"
-          onClick={handleReset}
-        >
-          Reset
-        </button>
-        <button
-          className="py-2 px-4 bg-sky-500 cursor-pointer hover:bg-sky-600 rounded-lg transition ease-in-out hover:text-white"
-          onClick={() => handleSubmit(data, prompt)}
-        >
-          Submit
-        </button>
-      </div>
-    </>
+    </div>
   );
 }
