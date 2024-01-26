@@ -3,6 +3,8 @@ import { TextField } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { run } from "./gemini";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import img from "/images/img.jpg";
 
 export default function Home() {
@@ -39,7 +41,8 @@ export default function Home() {
   const handleSubmit = async () => {
     // console.log(prompt);
     if (!prompt) {
-      console.error("There must be some content");
+      // console.error("There must be some content");
+      toast.error("Write some story!");
       return;
     }
 
@@ -99,21 +102,24 @@ export default function Home() {
   }, [persona]);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center font-sans">
       <div className="flex flex-col">
         <div className="main grid grid-cols-3 gap-8 mt-16 max-w-screen-2xl max-xl:grid-cols-2 max-md:grid-cols-1">
           <div className="left img-container w-[400px] ">
-            <p className="text-xl font-bold w-full text-center p-2">Image</p>
+            <p className="text-xl font-bold w-full text-center p-2 font-sans">
+              Image
+            </p>
             <div className="flex h-[400px] items-center justify-center">
               {imageLoading ? (
                 <div className="loader"></div>
-              ) : (
-                <img src={imageURL} alt="image" className="" />
-              )}
+                ) : (
+                  <img src={imageURL} alt="image" className="" />
+                  )}
             </div>
           </div>
           <div className="right user-text-container w-[400px] h-[400px] text-start">
             {/* text input is here for input from user */}
+            <ToastContainer />  
             <p className="text-xl font-bold w-full text-center p-2">
               Write what you percieved image
             </p>
@@ -144,13 +150,13 @@ export default function Home() {
         </div>
         <div className="btns my-4 flex items-center justify-center">
           <button
-            className="py-2 px-4 font-bold bg-red-500 text-white cursor-pointer mr-4 hover:bg-red-700 rounded-lg transition ease-in-out hover:text-white"
+            className="py-2 px-4 font-bold bg-red-500 text-white cursor-pointer mr-4 hover:bg-red-700 rounded-lg transition duration-300 ease-in-out hover:text-white"
             onClick={handleReset}
           >
             Reset
           </button>
           <button
-            className="py-2 px-4 font-bold text-white bg-red-500 cursor-pointer hover:bg-red-700 rounded-lg transition ease-in-out hover:text-white"
+            className="py-2 px-4 font-bold text-white bg-red-500 cursor-pointer hover:bg-red-700 rounded-lg transition duration-300 ease-in-out hover:text-white"
             onClick={() => handleSubmit(data, prompt)}
           >
             Submit
