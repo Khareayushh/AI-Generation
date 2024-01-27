@@ -7,5 +7,9 @@ Picture Perception and Discussion Test (PPDT) Simulator.
 
 ## Description 
 
-Design and develop an interactive web application that simulates the Picture Perception and Discussion Test (PPDT) for SSB (Services Selection Board) aspirants. The PPDT is a crucial part of the selection process, assessing the candidates' ability to perceive and analyze a given image, formulate a story based on it
+Design and develop an interactive web application that simulates the Picture Perception and Discussion Test (PPDT) for SSB (Services Selection Board) aspirants. The PPDT is a crucial part of the selection process, assessing the candidates' ability to perceive and analyze a given image, formulate a story based on it.
+
+Providing solution with tech stack:- Nextjs, Gemini AI, and will think to implement Firebase for client specific user experience.
+
+
    
