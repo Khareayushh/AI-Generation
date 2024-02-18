@@ -2,9 +2,9 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="footer flex items-center justify-center mt-16">
+    <div className="footer flex items-center justify-center mt-4">
       <p className="p-4">
-        All copyrights belongs to{" "}
+        Made by{" "}
         <a className="font-bold hover:text-red-600 transition duration-300" href="https://github.com/Khareayushh">
           @khareayushh
         </a>{" "}

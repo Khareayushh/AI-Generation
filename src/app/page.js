@@ -46,6 +46,11 @@ export default function Home() {
       return;
     }
 
+    if(prompt.length < 50){
+      toast.error("Write story of more than 50 words");
+      return;
+    }
+
     const text =
       prompt +
       " Write only in points at least 5 and at most 15 the personality attributes of the person who is writing the message after perceiving the image.like this:- The person who is writing the message is:1. Growth Minded.2. Action taker.3. Humor.4. Gentle.5. Courageous";
@@ -102,65 +107,91 @@ export default function Home() {
   }, [persona]);
 
   return (
-    <div className="flex justify-center font-sans">
-      <div className="flex flex-col">
-        <div className="main grid grid-cols-3 gap-8 mt-16 max-w-screen-2xl max-xl:grid-cols-2 max-md:grid-cols-1">
-          <div className="left img-container w-[400px] ">
-            <p className="text-xl font-bold w-full text-center p-2 font-sans">
-              Image
-            </p>
-            <div className="flex h-[400px] items-center justify-center">
-              {imageLoading ? (
-                <div className="loader"></div>
+    <div className="transition duration-300">
+      <div className="flex justify-center font-sans">
+        <div className="flex flex-col">
+          <div className="main grid grid-cols-3 gap-8 mt-16 max-w-screen-2xl max-xl:grid-cols-2 max-md:grid-cols-1">
+            <div className="left img-container w-[400px] ">
+              <p className="text-xl font-bold w-full text-center p-2 font-sans">
+                Image
+              </p>
+              <div className="flex h-[400px] items-center justify-center">
+                {imageLoading ? (
+                  <div className="loader"></div>
                 ) : (
                   <img src={imageURL} alt="image" className="" />
-                  )}
+                )}
+              </div>
             </div>
-          </div>
-          <div className="right user-text-container w-[400px] h-[400px] text-start">
-            {/* text input is here for input from user */}
-            <ToastContainer />  
-            <p className="text-xl font-bold w-full text-center p-2">
-              Write what you percieved image
-            </p>
-            <textarea
-              placeholder="Write here...."
-              className="h-full w-full text-start border-4 p-2 box-border"
-              onChange={handlePromt}
-            ></textarea>
-          </div>
+            <div className="right user-text-container w-[400px] h-[400px] text-start">
+              {/* text input is here for input from user */}
+              <ToastContainer />
+              <p className="text-xl font-bold w-full text-center p-2">
+                Write what you percieved image
+              </p>
+              <textarea
+                placeholder="Write here...."
+                className="h-full w-full text-start border-4 p-2 box-border"
+                onChange={handlePromt}
+              ></textarea>
+            </div>
 
-          <div id="result-section" className="result max-md:mt-4">
-            <p className="text-xl font-bold w-full text-center p-2">Result</p>
-            <div className="flex justify-center items-center h-[400px]">
-              {submitLoad ? (
-                <div className="loader"></div>
-              ) : (
-                <div>
-                  <textarea
-                    type="text"
-                    className="h-[400px] w-[400px] border-4 p-2"
-                    readOnly
-                    value={text}
-                  ></textarea>
-                </div>
-              )}
+            <div id="result-section" className="result max-md:mt-4">
+              <p className="text-xl font-bold w-full text-center p-2">Result</p>
+              <div className="flex justify-center items-center h-[400px]">
+                {submitLoad ? (
+                  <div className="loader"></div>
+                ) : (
+                  <div>
+                    <textarea
+                      type="text"
+                      className="h-[400px] w-[400px] border-4 p-2"
+                      readOnly
+                      value={text}
+                    ></textarea>
+                  </div>
+                )}
+              </div>
             </div>
+          </div>
+          <div className="btns my-4 flex items-center justify-center">
+            <button
+              className="py-2 px-4 font-bold bg-red-500 text-white cursor-pointer mr-4 hover:bg-red-700 rounded-lg transition duration-300 ease-in-out hover:text-white"
+              onClick={handleReset}
+            >
+              Reset
+            </button>
+            <button
+              className="py-2 px-4 font-bold text-white bg-red-500 cursor-pointer hover:bg-red-700 rounded-lg transition duration-300 ease-in-out hover:text-white"
+              onClick={() => handleSubmit(data, prompt)}
+            >
+              Submit
+            </button>
           </div>
         </div>
-        <div className="btns my-4 flex items-center justify-center">
-          <button
-            className="py-2 px-4 font-bold bg-red-500 text-white cursor-pointer mr-4 hover:bg-red-700 rounded-lg transition duration-300 ease-in-out hover:text-white"
-            onClick={handleReset}
-          >
-            Reset
-          </button>
-          <button
-            className="py-2 px-4 font-bold text-white bg-red-500 cursor-pointer hover:bg-red-700 rounded-lg transition duration-300 ease-in-out hover:text-white"
-            onClick={() => handleSubmit(data, prompt)}
-          >
-            Submit
-          </button>
+      </div>
+      <div className="max-w-5xl m-auto w-2/3 p-4 max-sm:w-full" id="about">
+        <p className="text-3xl font-semibold pb-4">About Project</p>
+        <div className="content">
+          <p className="text-xl font-semibold pb-2">Introduction</p>
+          <p className="text-lg pb-2">
+            Welcome to Persona. A personality identifier of person who wrote the
+            story. Our project aims to provide the personality attributes that
+            person possess on the basis of story written.
+          </p>
+          <p className="text-lg pb-2">
+            {" "}
+            <span className="font-semibold">Problem Statement:-</span> Picture
+            Perception and Discussion Test (PPDT) Simulator
+          </p>
+          <p className="text-lg">
+            <span className="font-semibold">Description:-</span> Design and
+            develop an interactive web application that simulates the Picture
+            Perception and Discussion Test (PPDT) for SSB (Services Selection
+            Board) aspirants. The PPDT is a crucial part of the selection
+            process, assessing the candidates' ability to perceive and analyze a
+            given image, formulate a story based on it
+          </p>
         </div>
       </div>
     </div>

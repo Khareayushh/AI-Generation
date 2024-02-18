@@ -14,12 +14,27 @@ const Navbar = () => {
     setHam(!ham);
   };
 
+  const handleSmoothScroll = (e) => {
+    e.preventDefault();
+    const targetId = e.target.getAttribute("href");
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <div className="head flex items-center justify-center mt-4 max-md:flex max-md:justify-between max-md:mx-8 transition-all duration-150">
       <p className="font-bold text-3xl bg-transparent ">Persona</p>
       <p
         className="absolute right-8 hover:text-red-600 cursor-pointer font-bold transition-all duration-300 ease-in-out max-md:hidden"
-        onClick={() => router.push("/about")}
+        onClick={(e) => {
+          handleSmoothScroll(e);
+        }}
+        href="#about"
       >
         About Persona
       </p>
@@ -39,20 +54,12 @@ const Navbar = () => {
       {ham && (
         <div className="absolute bg-slate-300  top-16 right-0 transition-all p-4 max-md:block">
           <p
-            className="hover:text-red-600 border-b-4 cursor-pointer font-bold transition-all duration-300 ease-in-out"
-            onClick={() => {
-              router.push("/");
-              handleham(); // Close the menu after clicking a link
-            }}
-          >
-            Home
-          </p>
-          <p
             className="hover:text-red-600 cursor-pointer font-bold transition-all duration-300 ease-in-out"
-            onClick={() => {
-              router.push("/about");
+            onClick={(e) => {
+              handleSmoothScroll(e);
               handleham(); // Close the menu after clicking a link
             }}
+            href="#about"
           >
             About Persona
           </p>
