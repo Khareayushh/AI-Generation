@@ -1,8 +1,8 @@
-"use client";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
-import { Close } from "@mui/icons-material";
+'use client';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Close } from '@mui/icons-material';
 // import HamburgerMenu from "./Hamburger";
 
 const Navbar = () => {
@@ -16,12 +16,12 @@ const Navbar = () => {
 
   const handleSmoothScroll = (e) => {
     e.preventDefault();
-    const targetId = e.target.getAttribute("href");
+    const targetId = e.target.getAttribute('href');
     const targetElement = document.querySelector(targetId);
     if (targetElement) {
       window.scrollTo({
         top: targetElement.offsetTop,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   };
@@ -74,10 +74,12 @@ const Navbar = () => {
             >
               About Persona
             </p>
-            <a href="https://github.com/Khareayushh/fav_giphy" target="_blank" className="mt-2 border-t-4 pt-2">
-              <p
-                className="hover:text-red-600 cursor-pointer font-bold transition-all duration-300 ease-in-out"
-              >
+            <a
+              href="https://github.com/Khareayushh/fav_giphy"
+              target="_blank"
+              className="mt-2 border-t-4 pt-2"
+            >
+              <p className="hover:text-red-600 cursor-pointer font-bold transition-all duration-300 ease-in-out">
                 Source Code
               </p>
             </a>

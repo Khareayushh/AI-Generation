@@ -13,6 +13,7 @@ const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 //   };
 // }
 
+console.log('Hello world');
 
 async function run({ prompt }) {
   // For text-and-image input (multimodal), use the gemini-pro-vision model

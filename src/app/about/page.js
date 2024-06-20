@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const About = () => {
   return (
@@ -10,8 +10,19 @@ const About = () => {
           story. Our project aims to provide the personality attributes that
           person possess on the basis of story written.
         </p>
-        <p className="text-lg pb-2"> <span className="font-semibold">Problem Statement:-</span> Picture Perception and Discussion Test (PPDT) Simulator</p>
-        <p className="text-lg"><span className="font-semibold">Description:-</span> Design and develop an interactive web application that simulates the Picture Perception and Discussion Test (PPDT) for SSB (Services Selection Board) aspirants. The PPDT is a crucial part of the selection process, assessing the candidates' ability to perceive and analyze a given image, formulate a story based on it</p>
+        <p className="text-lg pb-2">
+          {' '}
+          <span className="font-semibold">Problem Statement:-</span> Picture
+          Perception and Discussion Test (PPDT) Simulator
+        </p>
+        <p className="text-lg">
+          <span className="font-semibold">Description:-</span> Design and
+          develop an interactive web application that simulates the Picture
+          Perception and Discussion Test (PPDT) for SSB (Services Selection
+          Board) aspirants. The PPDT is a crucial part of the selection process,
+          assessing the candidates' ability to perceive and analyze a given
+          image, formulate a story based on it
+        </p>
       </div>
     </div>
   );
