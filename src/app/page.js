@@ -1,29 +1,29 @@
-"use client";
-import { TextField } from "@mui/material";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { run } from "./gemini";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+'use client';
+import { TextField } from '@mui/material';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { run } from './gemini';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import img from "/images/img.jpg";
 
 export default function Home() {
-  const [imageURL, setImageURL] = useState("");
+  const [imageURL, setImageURL] = useState('');
   const [submitLoad, setSubmitLoad] = useState(false);
-  const [data, setData] = useState("");
+  const [data, setData] = useState('');
   const [imageLoading, setImageLoading] = useState(false);
-  const [prompt, setPrompt] = useState("");
-  const [persona, setPersona] = useState("");
-  const [text, setText] = useState("");
+  const [prompt, setPrompt] = useState('');
+  const [persona, setPersona] = useState('');
+  const [text, setText] = useState('');
 
   const handleReset = async () => {
     try {
       setImageLoading(true);
       const response = await axios.get(
-        "https://picsum.photos/400/400?grayscale"
+        'https://picsum.photos/400/400?grayscale',
       );
 
-      setText("");
+      setText('');
       setData(response.data);
       setImageURL(response.request.responseURL);
     } catch (error) {
@@ -42,18 +42,18 @@ export default function Home() {
     // console.log(prompt);
     if (!prompt) {
       // console.error("There must be some content");
-      toast.error("Write some story!");
+      toast.error('Write some story!');
       return;
     }
 
-    if(prompt.length < 50){
-      toast.error("Write story of more than 50 words");
+    if (prompt.length < 50) {
+      toast.error('Write story of more than 50 words');
       return;
     }
 
     const text =
       prompt +
-      " Write only in points at least 5 and at most 15 the personality attributes of the person who is writing the message after perceiving the image.like this:- The person who is writing the message is:1. Growth Minded.2. Action taker.3. Humor.4. Gentle.5. Courageous";
+      ' Write only in points at least 5 and at most 15 the personality attributes of the person who is writing the message after perceiving the image.like this:- The person who is writing the message is:1. Growth Minded.2. Action taker.3. Humor.4. Gentle.5. Courageous';
     // console.log(text);
     try {
       setSubmitLoad(true);
@@ -76,7 +76,7 @@ export default function Home() {
       try {
         setImageLoading(true);
         const response = await axios.get(
-          "https://picsum.photos/400/400?grayscale"
+          'https://picsum.photos/400/400?grayscale',
         );
         setData(response.data);
         setImageURL(response.request.responseURL);
@@ -180,7 +180,7 @@ export default function Home() {
             person possess on the basis of story written.
           </p>
           <p className="text-lg pb-2">
-            {" "}
+            {' '}
             <span className="font-semibold">Problem Statement:-</span> Picture
             Perception and Discussion Test (PPDT) Simulator
           </p>
